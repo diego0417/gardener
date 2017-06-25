@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlapp\SmartSeeder;
+namespace Eighty8\LaravelSeeder;
 
 use Symfony\Component\Console\Input\InputOption;
 
@@ -31,7 +31,13 @@ class SeedOverrideCommand extends SeedCommand
     protected function getOptions()
     {
         $options = parent::getOptions();
-        $options[] = ['class', null, InputOption::VALUE_OPTIONAL, "There is no rootseeder in the SmartSeeder package, but we need this to override Laravel's behaviour.", null];
+        $options[] = [
+            'class',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            "There is no rootseeder in the LaravelSeeder package, but we need this to override Laravel's behavior.",
+            null
+        ];
 
         return $options;
     }

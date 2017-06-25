@@ -1,28 +1,28 @@
 <?php
 
-namespace Jlapp\SmartSeeder;
+namespace Eighty8\LaravelSeeder;
 
 use App;
 use Config;
 use File;
-use Illuminate\Console\AppNamespaceDetectorTrait;
+use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Database\ConnectionResolverInterface as Resolver;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
 
 class SeedMigrator extends Migrator
 {
-    use AppNamespaceDetectorTrait;
+    use DetectsApplicationNamespace;
 
     /**
      * Create a new migrator instance.
      *
      * @param  \Illuminate\Database\Migrations\MigrationRepositoryInterface $repository
-     * @param  \Illuminate\Database\ConnectionResolverInterface             $resolver
-     * @param  \Illuminate\Filesystem\Filesystem                            $files
+     * @param  \Illuminate\Database\ConnectionResolverInterface $resolver
+     * @param  \Illuminate\Filesystem\Filesystem $files
      * @return void
      */
-    public function __construct(SmartSeederRepository $repository, Resolver $resolver, Filesystem $files)
+    public function __construct(SeederRepository $repository, Resolver $resolver, Filesystem $files)
     {
         parent::__construct($repository, $resolver, $files);
     }
@@ -47,11 +47,11 @@ class SeedMigrator extends Migrator
     {
         $files = [];
 
-        if (! empty($this->repository->env)) {
+        if (!empty($this->repository->env)) {
             $files = array_merge($files, $this->files->glob("$path/{$this->repository->env}/*.php"));
         }
 
-        $files = array_merge($files, $this->files->glob($path.'/*.php'));
+        $files = array_merge($files, $this->files->glob($path . '/*.php'));
 
         // Once we have the array of files in the directory we will just remove the
         // extension and take the basename of the file which is all we need when
@@ -76,7 +76,7 @@ class SeedMigrator extends Migrator
      * Run the outstanding migrations at a given path.
      *
      * @param  string $path
-     * @param  bool   $pretend
+     * @param  bool $pretend
      * @return void
      */
     public function runSingleFile($path, $pretend = false)
@@ -93,7 +93,7 @@ class SeedMigrator extends Migrator
         $migrations = array_diff($files, $ran);
         $filename_ext = pathinfo($path, PATHINFO_EXTENSION);
 
-        if (! $filename_ext) {
+        if (!$filename_ext) {
             $path .= '.php';
         }
 
@@ -106,8 +106,8 @@ class SeedMigrator extends Migrator
      * Run "up" a migration instance.
      *
      * @param  string $file
-     * @param  int    $batch
-     * @param  bool   $pretend
+     * @param  int $batch
+     * @param  bool $pretend
      * @return void
      */
     protected function runUp($file, $batch, $pretend)
@@ -115,7 +115,7 @@ class SeedMigrator extends Migrator
         // First we will resolve a "real" instance of the migration class from this
         // migration file name. Once we have the instances we can run the actual
         // command such as "up" or "down", or we can just simulate the action.
-        $fullPath = $this->getAppNamespace().$file;
+        $fullPath = $this->getAppNamespace() . $file;
         $migration = new $fullPath();
 
         if ($pretend) {
@@ -136,7 +136,7 @@ class SeedMigrator extends Migrator
      * Run "down" a migration instance.
      *
      * @param  object $seed
-     * @param  bool   $pretend
+     * @param  bool $pretend
      * @return void
      */
     protected function runDown($seed, $pretend)
@@ -172,17 +172,17 @@ class SeedMigrator extends Migrator
      */
     public function resolve($file)
     {
-        $filePath = database_path(config('seeds.dir').'/'.$file.'.php');
+        $filePath = database_path(config('seeders.dir') . '/' . $file . '.php');
 
         if (File::exists($filePath)) {
             require_once $filePath;
-        } elseif (! empty($this->repository->env)) {
-            require_once database_path(config('seeds.dir').'/'.$this->repository->env.'/'.$file.'.php');
+        } elseif (!empty($this->repository->env)) {
+            require_once database_path(config('seeders.dir') . '/' . $this->repository->env . '/' . $file . '.php');
         } else {
-            require_once database_path(config('seeds.dir').'/'.App::environment().'/'.$file.'.php');
+            require_once database_path(config('seeders.dir') . '/' . App::environment() . '/' . $file . '.php');
         }
 
-        $fullPath = $this->getAppNamespace().$file;
+        $fullPath = $this->getAppNamespace() . $file;
 
         return new $fullPath();
     }

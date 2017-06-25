@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default seeds table
+    | Default seeders table
     |--------------------------------------------------------------------------
     |
     | Do not change this! Unless you also change the included migration, since
@@ -12,17 +12,17 @@ return [
     |
     */
 
-    'table' => 'seeds',
+    'table' => 'seeders',
 
     /*
     |--------------------------------------------------------------------------
-    | Default seeds folder
+    | Default seeders folder
     |--------------------------------------------------------------------------
     |
     | This option controls the default seeds folder
     |
     */
 
-    'dir' => 'smart-seeds',
+    'dir' => 'seeders',
 
 ];

@@ -1,31 +1,31 @@
 <?php
 
-namespace Jlapp\SmartSeeder;
+namespace Eighty8\LaravelSeeder;
 
 use Config;
 use File;
-use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Console\Command;
+use Illuminate\Console\DetectsApplicationNamespace;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class SeedMakeCommand extends Command
 {
-    use AppNamespaceDetectorTrait;
+    use DetectsApplicationNamespace;
 
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'seed:make';
+    protected $name = 'seeder:make';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Makes a seed';
+    protected $description = 'Makes a seeder';
 
     /**
      * Execute the console command.
@@ -37,21 +37,21 @@ class SeedMakeCommand extends Command
         $model = ucfirst($this->argument('model'));
         $path = $this->option('path');
         $env = $this->option('env');
-        $stub = File::get(__DIR__.'/stubs/DatabaseSeeder.stub');
+        $stub = File::get(__DIR__ . '/stubs/DatabaseSeeder.stub');
 
         // Check path
         if (empty($path)) {
-            $path = database_path(config('seeds.dir'));
+            $path = database_path(config('seeders.dir'));
         } else {
             $path = base_path($path);
         }
 
         // Check env
-        if (! empty($env)) {
+        if (!empty($env)) {
             $path .= "/$env";
         }
 
-        if (! File::exists($path)) {
+        if (!File::exists($path)) {
             File::makeDirectory($path, 0755, true);
         }
 
@@ -61,7 +61,7 @@ class SeedMakeCommand extends Command
 
         // Content
         $namespace = rtrim($this->getAppNamespace(), '\\');
-        $stub = str_replace('{{model}}', "seed_{$created}_".$model.'Seeder', $stub);
+        $stub = str_replace('{{model}}', "seed_{$created}_" . $model . 'Seeder', $stub);
         $stub = str_replace('{{namespace}}', " namespace $namespace;", $stub);
         $stub = str_replace('{{class}}', $model, $stub);
 
@@ -69,9 +69,9 @@ class SeedMakeCommand extends Command
         File::put($path, $stub);
 
         // Output message
-        $message = "Seed created for $model";
+        $message = "Seeder created for $model";
 
-        if (! empty($env)) {
+        if (!empty($env)) {
             $message .= " in environment: $env";
         }
 
@@ -99,7 +99,13 @@ class SeedMakeCommand extends Command
     {
         return [
             ['env', null, InputOption::VALUE_OPTIONAL, 'The environment to seed to.', null],
-            ['path', null, InputOption::VALUE_OPTIONAL, 'The relative path to the base path to generate the seed to.', null],
+            [
+                'path',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'The relative path to the base path to generate the seed to.',
+                null
+            ],
         ];
     }
 }

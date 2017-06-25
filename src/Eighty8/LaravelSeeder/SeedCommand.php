@@ -1,10 +1,9 @@
 <?php
 
-namespace Jlapp\SmartSeeder;
+namespace Eighty8\LaravelSeeder;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use Illuminate\Support\Facades\Config;
 use Symfony\Component\Console\Input\InputOption;
 
 class SeedCommand extends Command
@@ -12,18 +11,11 @@ class SeedCommand extends Command
     use ConfirmableTrait;
 
     /**
-     * Migrator.
-     *
-     * @var object
-     */
-    private $migrator;
-
-    /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'seed:run';
+    protected $name = 'seeder:run';
 
     /**
      * The console command description.
@@ -31,6 +23,13 @@ class SeedCommand extends Command
      * @var string
      */
     protected $description = 'Seeds the database';
+
+    /**
+     * Migrator.
+     *
+     * @var object
+     */
+    private $migrator;
 
     /**
      * Constructor.
@@ -51,11 +50,11 @@ class SeedCommand extends Command
      */
     public function fire()
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return;
         }
 
-        $path = database_path(config('seeds.dir'));
+        $path = database_path(config('seeders.dir'));
         $env = $this->option('env');
         $single = $this->option('file');
 
@@ -92,12 +91,12 @@ class SeedCommand extends Command
     {
         $this->migrator->setConnection($this->input->getOption('database'));
 
-        if (! $this->migrator->repositoryExists()) {
+        if (!$this->migrator->repositoryExists()) {
             $options = [
                 '--database' => $this->input->getOption('database'),
             ];
 
-            $this->call('seed:install', $options);
+            $this->call('seeder:install', $options);
         }
     }
 

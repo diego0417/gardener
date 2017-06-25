@@ -1,28 +1,38 @@
 {
-	"name": "alasit/gardener",
-	"description": "Smart seeders for Laravel. created and developed by gizburdt",
-	"keywords": ["laravel", "seed", "database", "seeding", "table", "seeder", "smart"],
-	"type": "library",
-	"license": "MIT",
-	"require": {
-		"php": ">=5.4.0",
-		"illuminate/support": "5.3.*",
-		"illuminate/console": "5.3.*",
-		"illuminate/database": "5.3.*",
-		"illuminate/filesystem": "5.3.*"
-	},
-	"require-dev": {
-		"phpspec/phpspec": "~2.0",
-		"henrikbjorn/phpspec-code-coverage": "~0.2"
-	},
-	"autoload": {
-		"psr-0": {
-	  		"Jlapp\\SmartSeeder\\": "src/"
-		}
-	},
-	"config": {
-		"bin-dir": "bin"
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true
+  "name": "eighty8/laravel-seeder",
+  "description": "Environment-based Laravel Seeder with Versioning",
+  "keywords": [
+    "data",
+    "database",
+    "environment",
+    "laravel",
+    "production",
+    "seed",
+    "seeder",
+    "seeding",
+    "staging",
+    "table"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "5.4.*",
+    "illuminate/console": "5.4.*",
+    "illuminate/database": "5.4.*",
+    "illuminate/filesystem": "5.4.*"
+  },
+  "require-dev": {
+    "phpspec/phpspec": "~2.0",
+    "henrikbjorn/phpspec-code-coverage": "~0.2"
+  },
+  "autoload": {
+    "psr-0": {
+      "Eighty8\\SmartSeeder\\": "src/"
+    }
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "prefer-stable": true
 }

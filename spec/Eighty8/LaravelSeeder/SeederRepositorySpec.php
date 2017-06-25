@@ -1,11 +1,11 @@
 <?php
 
-namespace spec\Jlapp\SmartSeeder;
+namespace spec\Eighty8\LaravelSeeder;
 
 use Illuminate\Database\ConnectionResolverInterface;
 use PhpSpec\ObjectBehavior;
 
-class SmartSeederRepositorySpec extends ObjectBehavior
+class SeederRepositorySpec extends ObjectBehavior
 {
     /** @var string */
     protected $table = 'test-table-name';
@@ -27,7 +27,7 @@ class SmartSeederRepositorySpec extends ObjectBehavior
         $this->setSource($this->source);
         $this->setEnv($this->env);
 
-        $this->shouldHaveType('Jlapp\SmartSeeder\SmartSeederRepository');
+        $this->shouldHaveType('Eighty8\LaravelSeeder\SeederRepository');
     }
 
     public function it_should_implement_interface()

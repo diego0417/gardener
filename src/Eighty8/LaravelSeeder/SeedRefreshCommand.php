@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlapp\SmartSeeder;
+namespace Eighty8\LaravelSeeder;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
@@ -15,7 +15,7 @@ class SeedRefreshCommand extends Command
      *
      * @var string
      */
-    protected $name = 'seed:refresh';
+    protected $name = 'seeder:refresh';
 
     /**
      * The console command description.
@@ -31,7 +31,7 @@ class SeedRefreshCommand extends Command
      */
     public function fire()
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return;
         }
 

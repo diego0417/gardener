@@ -1,11 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jordan
- * Date: 2014-11-07
- * Time: 1:46 PM.
- */
-namespace Jlapp\SmartSeeder;
+
+namespace Eighty8\LaravelSeeder;
 
 use File;
 use Illuminate\Console\Command;
@@ -17,25 +12,24 @@ class SeedRollbackCommand extends Command
     use ConfirmableTrait;
 
     /**
-     * SeedMigrator.
-     *
-     * @var [type]
-     */
-    private $migrator;
-
-    /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'seed:rollback';
-
+    protected $name = 'seeder:rollback';
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Rollback all database seeding';
+
+    /**
+     * SeedMigrator.
+     *
+     * @var [type]
+     */
+    private $migrator;
 
     /**
      * Constructor.
@@ -56,7 +50,7 @@ class SeedRollbackCommand extends Command
      */
     public function fire()
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return;
         }
 
@@ -65,7 +59,7 @@ class SeedRollbackCommand extends Command
 
         $this->migrator->setConnection($this->input->getOption('database'));
 
-        if (File::exists(database_path(config('seeds.dir')))) {
+        if (File::exists(database_path(config('seeders.dir')))) {
             $this->migrator->setEnv($env);
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlapp\SmartSeeder;
+namespace Eighty8\LaravelSeeder;
 
 use Illuminate\Database\Migrations\MigrationCreator;
 
@@ -13,6 +13,6 @@ class SeedMigrationCreator extends MigrationCreator
      */
     public function getStubPath()
     {
-        return __DIR__.'/stubs';
+        return __DIR__ . '/stubs';
     }
 }

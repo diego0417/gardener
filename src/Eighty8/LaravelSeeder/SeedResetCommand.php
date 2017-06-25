@@ -1,6 +1,6 @@
 <?php
 
-namespace Jlapp\SmartSeeder;
+namespace Eighty8\LaravelSeeder;
 
 use File;
 use Illuminate\Console\Command;
@@ -12,25 +12,24 @@ class SeedResetCommand extends Command
     use ConfirmableTrait;
 
     /**
-     * Migrator.
-     *
-     * @var object
-     */
-    private $migrator;
-
-    /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'seed:reset';
-
+    protected $name = 'seeder:reset';
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Resets all the seeds in the database';
+
+    /**
+     * Migrator.
+     *
+     * @var object
+     */
+    private $migrator;
 
     /**
      * Constructor.
@@ -51,7 +50,7 @@ class SeedResetCommand extends Command
      */
     public function fire()
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return;
         }
 
@@ -60,7 +59,7 @@ class SeedResetCommand extends Command
 
         $this->prepareDatabase();
 
-        if (File::exists(database_path(config('seeds.dir')))) {
+        if (File::exists(database_path(config('seeders.dir')))) {
             $this->migrator->setEnv($env);
         }
 
@@ -93,7 +92,7 @@ class SeedResetCommand extends Command
     {
         $this->migrator->setConnection($this->input->getOption('database'));
 
-        if (! $this->migrator->repositoryExists()) {
+        if (!$this->migrator->repositoryExists()) {
             $options = [
                 '--database' => $this->input->getOption('database'),
             ];
